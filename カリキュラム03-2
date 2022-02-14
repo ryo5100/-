@@ -1,0 +1,356 @@
+ryo02:~/environment $ cat /etc/os-release
+NAME="Amazon Linux"
+VERSION="2"
+ID="amzn"
+ID_LIKE="centos rhel fedora"
+VERSION_ID="2"
+PRETTY_NAME="Amazon Linux 2"
+ANSI_COLOR="0;33"
+CPE_NAME="cpe:2.3:o:amazon:amazon_linux:2"
+HOME_URL="https://amazonlinux.com/"
+ryo02:~/environment $ sudo timedatectl set-timezone Asia/Tokyo
+ryo02:~/environment $ timedatectl
+      Local time: Wed 2022-02-09 13:27:06 JST
+  Universal time: Wed 2022-02-09 04:27:06 UTC
+        RTC time: Wed 2022-02-09 04:27:06
+       Time zone: Asia/Tokyo (JST, +0900)
+     NTP enabled: yes
+NTP synchronized: yes
+ RTC in local TZ: no
+      DST active: n/a
+ryo02:~/environment $ dh -h
+bash: dh: command not found
+ryo02:~/environment $ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+devtmpfs        475M     0  475M   0% /dev
+tmpfs           492M     0  492M   0% /dev/shm
+tmpfs           492M  468K  491M   1% /run
+tmpfs           492M     0  492M   0% /sys/fs/cgroup
+/dev/xvda1       10G  8.4G  1.7G  84% /
+tmpfs            99M     0   99M   0% /run/user/1000
+ryo02:~/environment $ yum list installed | grep docker
+containerd.x86_64                     1.4.6-7.amzn2                  @amzn2extra-docker
+docker.x86_64                         20.10.7-5.amzn2                @amzn2extra-docker
+runc.x86_64                           1.0.0-2.amzn2                  @amzn2extra-docker
+ryo02:~/environment $ sudo du -she /var/lib/*
+du: invalid option -- 'e'
+Try 'du --help' for more information.
+ryo02:~/environment $ sudo du -shc /var/lib/*
+36K     /var/lib/alternatives
+3.5M    /var/lib/amazon
+0       /var/lib/authconfig
+4.0K    /var/lib/chrony
+316K    /var/lib/cloud
+132K    /var/lib/containerd
+0       /var/lib/cs
+0       /var/lib/dav
+0       /var/lib/dbus
+8.0K    /var/lib/dhclient
+2.3G    /var/lib/docker
+0       /var/lib/games
+0       /var/lib/gssproxy
+0       /var/lib/hibinit-agent
+0       /var/lib/httpd
+0       /var/lib/initramfs
+0       /var/lib/logrotate
+0       /var/lib/machines
+0       /var/lib/misc
+0       /var/lib/mlocate
+0       /var/lib/nfs
+0       /var/lib/os-prober
+504K    /var/lib/pear
+0       /var/lib/php
+4.0K    /var/lib/plymouth
+4.0K    /var/lib/postfix
+0       /var/lib/rpcbind
+47M     /var/lib/rpm
+0       /var/lib/rpm-state
+4.0K    /var/lib/rsyslog
+0       /var/lib/stateless
+64K     /var/lib/systemd
+0       /var/lib/tpm
+4.0K    /var/lib/update-motd
+0       /var/lib/xfsdump
+14M     /var/lib/yum
+2.4G    total
+ryo02:~/environment $ sudo yum remove docker
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+Resolving Dependencies
+--> Running transaction check
+---> Package docker.x86_64 0:20.10.7-5.amzn2 will be erased
+--> Finished Dependency Resolution
+amzn2-core/2/x86_64                                                                                                                                                | 3.7 kB  00:00:00     
+
+Dependencies Resolved
+
+==========================================================================================================================================================================================
+ Package                                Arch                                   Version                                           Repository                                          Size
+==========================================================================================================================================================================================
+Removing:
+ docker                                 x86_64                                 20.10.7-5.amzn2                                   @amzn2extra-docker                                 177 M
+
+Transaction Summary
+==========================================================================================================================================================================================
+Remove  1 Package
+
+Installed size: 177 M
+Is this ok [y/N]: sudo rm -fr /var/lib/docker
+Is this ok [y/N]: y
+Downloading packages:
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Erasing    : docker-20.10.7-5.amzn2.x86_64                                                                                                                                          1/1 
+  Verifying  : docker-20.10.7-5.amzn2.x86_64                                                                                                                                          1/1 
+
+Removed:
+  docker.x86_64 0:20.10.7-5.amzn2                                                                                                                                                         
+
+Complete!
+ryo02:~/environment $ sudo rm -fr /var/lib/docker
+ryo02:~/environment $ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+devtmpfs        475M     0  475M   0% /dev
+tmpfs           492M     0  492M   0% /dev/shm
+tmpfs           492M  456K  491M   1% /run
+tmpfs           492M     0  492M   0% /sys/fs/cgroup
+/dev/xvda1       10G  5.9G  4.2G  59% /
+tmpfs            99M     0   99M   0% /run/user/1000
+ryo02:~/environment $ php -v
+PHP 7.2.24 (cli) (built: Oct 31 2019 18:27:08) ( NTS )
+Copyright (c) 1997-2018 The PHP Group
+Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies
+    with Xdebug v3.1.3, Copyright (c) 2002-2022, by Derick Rethans
+ryo02:~/environment $ sudo yum -y install http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+remi-release-7.rpm                                                                                                                                                 |  23 kB  00:00:00     
+Examining /var/tmp/yum-root-EPGSDC/remi-release-7.rpm: remi-release-7.9-2.el7.remi.noarch
+Marking /var/tmp/yum-root-EPGSDC/remi-release-7.rpm to be installed
+Resolving Dependencies
+--> Running transaction check
+---> Package remi-release.noarch 0:7.9-2.el7.remi will be installed
+# This repository only provides PHP 8.0 and its extensions
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+==========================================================================================================================================================================================
+ Package                                      Arch                                   Version                                        Repository                                       Size
+==========================================================================================================================================================================================
+Installing:
+ remi-release                                 noarch                                 7.9-2.el7.remi                                 /remi-release-7                                  32 k
+
+Transaction Summary
+==========================================================================================================================================================================================
+Install  1 Package
+
+Total size: 32 k
+Installed size: 32 k
+Downloading packages:
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : remi-release-7.9-2.el7.remi.noarch                                                                                                                                     1/1 
+  Verifying  : remi-release-7.9-2.el7.remi.noarch                                                                                                                                     1/1 
+
+Installed:
+  remi-release.noarch 0:7.9-2.el7.remi                                                                                                                                                    
+
+Complete!
+ryo02:~/environment $ sudo vim /etc/yum.repos.d/remi-php80.repo
+ryo02:~/environment $ sudo yum install --enablerepo=remi-php80 php php-mbstring php-pdo_mysql php-pdo
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+amzn2-core                                                                                                                                                         | 3.7 kB  00:00:00     
+remi-php80                                                                                                                                                         | 3.0 kB  00:00:00     
+remi-php80/primary_db                                                                                                                                              | 206 kB  00:00:00     
+1008 packages excluded due to repository priority protections
+Resolving Dependencies
+--> Running transaction check
+---> Package php.x86_64 0:8.0.15-1.el7.remi will be installed
+--> Processing Dependency: php-cli(x86-64) = 8.0.15-1.el7.remi for package: php-8.0.15-1.el7.remi.x86_64
+--> Processing Dependency: php-common(x86-64) = 8.0.15-1.el7.remi for package: php-8.0.15-1.el7.remi.x86_64
+--> Processing Dependency: php-sodium(x86-64) = 8.0.15-1.el7.remi for package: php-8.0.15-1.el7.remi.x86_64
+---> Package php-mbstring.x86_64 0:8.0.15-1.el7.remi will be installed
+--> Processing Dependency: libonig.so.105()(64bit) for package: php-mbstring-8.0.15-1.el7.remi.x86_64
+---> Package php-mysqlnd.x86_64 0:7.2.24-1.amzn2.0.1 will be updated
+---> Package php-mysqlnd.x86_64 0:8.0.15-1.el7.remi will be an update
+---> Package php-pdo.x86_64 0:7.2.24-1.amzn2.0.1 will be updated
+---> Package php-pdo.x86_64 0:8.0.15-1.el7.remi will be an update
+--> Running transaction check
+---> Package oniguruma5php.x86_64 0:6.9.7.1-1.el7.remi will be installed
+---> Package php-cli.x86_64 0:7.2.24-1.amzn2.0.1 will be updated
+--> Processing Dependency: php-cli(x86-64) = 7.2.24-1.amzn2.0.1 for package: php-devel-7.2.24-1.amzn2.0.1.x86_64
+---> Package php-cli.x86_64 0:8.0.15-1.el7.remi will be an update
+--> Processing Dependency: libncurses.so.5()(64bit) for package: php-cli-8.0.15-1.el7.remi.x86_64
+--> Processing Dependency: libtinfo.so.5()(64bit) for package: php-cli-8.0.15-1.el7.remi.x86_64
+---> Package php-common.x86_64 0:7.2.24-1.amzn2.0.1 will be updated
+--> Processing Dependency: php-common(x86-64) = 7.2.24-1.amzn2.0.1 for package: php-xml-7.2.24-1.amzn2.0.1.x86_64
+--> Processing Dependency: php-common(x86-64) = 7.2.24-1.amzn2.0.1 for package: php-process-7.2.24-1.amzn2.0.1.x86_64
+--> Processing Dependency: php-common(x86-64) = 7.2.24-1.amzn2.0.1 for package: php-fpm-7.2.24-1.amzn2.0.1.x86_64
+---> Package php-common.x86_64 0:8.0.15-1.el7.remi will be obsoleting
+---> Package php-json.x86_64 0:7.2.24-1.amzn2.0.1 will be obsoleted
+---> Package php-sodium.x86_64 0:8.0.15-1.el7.remi will be installed
+--> Processing Dependency: libsodium.so.23()(64bit) for package: php-sodium-8.0.15-1.el7.remi.x86_64
+--> Running transaction check
+---> Package libsodium.x86_64 0:1.0.18-2.amzn2 will be installed
+---> Package ncurses-compat-libs.x86_64 0:6.0-8.20170212.amzn2.1.3 will be installed
+---> Package php-devel.x86_64 0:7.2.24-1.amzn2.0.1 will be updated
+---> Package php-devel.x86_64 0:8.0.15-1.el7.remi will be an update
+--> Processing Dependency: libxml2-devel(x86-64) for package: php-devel-8.0.15-1.el7.remi.x86_64
+---> Package php-fpm.x86_64 0:7.2.24-1.amzn2.0.1 will be updated
+---> Package php-fpm.x86_64 0:8.0.15-1.el7.remi will be an update
+---> Package php-process.x86_64 0:7.2.24-1.amzn2.0.1 will be updated
+---> Package php-process.x86_64 0:8.0.15-1.el7.remi will be an update
+---> Package php-xml.x86_64 0:7.2.24-1.amzn2.0.1 will be updated
+---> Package php-xml.x86_64 0:8.0.15-1.el7.remi will be an update
+--> Running transaction check
+---> Package libxml2-devel.x86_64 0:2.9.1-6.amzn2.5.4 will be installed
+--> Processing Dependency: xz-devel for package: libxml2-devel-2.9.1-6.amzn2.5.4.x86_64
+--> Running transaction check
+---> Package xz-devel.x86_64 0:5.2.2-1.amzn2.0.2 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+==========================================================================================================================================================================================
+ Package                                    Arch                          Version                                         Repository                                                 Size
+==========================================================================================================================================================================================
+Installing:
+ php                                        x86_64                        8.0.15-1.el7.remi                               remi-php80                                                1.7 M
+ php-common                                 x86_64                        8.0.15-1.el7.remi                               remi-php80                                                1.2 M
+     replacing  php-json.x86_64 7.2.24-1.amzn2.0.1
+ php-mbstring                               x86_64                        8.0.15-1.el7.remi                               remi-php80                                                517 k
+Updating:
+ php-mysqlnd                                x86_64                        8.0.15-1.el7.remi                               remi-php80                                                256 k
+ php-pdo                                    x86_64                        8.0.15-1.el7.remi                               remi-php80                                                149 k
+Installing for dependencies:
+ libsodium                                  x86_64                        1.0.18-2.amzn2                                  amzn2extra-lamp-mariadb10.2-php7.2                        156 k
+ libxml2-devel                              x86_64                        2.9.1-6.amzn2.5.4                               amzn2-core                                                1.1 M
+ ncurses-compat-libs                        x86_64                        6.0-8.20170212.amzn2.1.3                        amzn2-core                                                308 k
+ oniguruma5php                              x86_64                        6.9.7.1-1.el7.remi                              remi-safe                                                 205 k
+ php-sodium                                 x86_64                        8.0.15-1.el7.remi                               remi-php80                                                 90 k
+ xz-devel                                   x86_64                        5.2.2-1.amzn2.0.2                               amzn2-core                                                 46 k
+Updating for dependencies:
+ php-cli                                    x86_64                        8.0.15-1.el7.remi                               remi-php80                                                5.3 M
+ php-devel                                  x86_64                        8.0.15-1.el7.remi                               remi-php80                                                1.3 M
+ php-fpm                                    x86_64                        8.0.15-1.el7.remi                               remi-php80                                                1.8 M
+ php-process                                x86_64                        8.0.15-1.el7.remi                               remi-php80                                                 99 k
+ php-xml                                    x86_64                        8.0.15-1.el7.remi                               remi-php80                                                230 k
+
+Transaction Summary
+==========================================================================================================================================================================================
+Install  3 Packages (+6 Dependent packages)
+Upgrade  2 Packages (+5 Dependent packages)
+
+Total download size: 14 M
+Is this ok [y/d/N]: y
+Downloading packages:
+Delta RPMs disabled because /usr/bin/applydeltarpm not installed.
+(1/16): ncurses-compat-libs-6.0-8.20170212.amzn2.1.3.x86_64.rpm                                                                                                    | 308 kB  00:00:00     
+(2/16): libxml2-devel-2.9.1-6.amzn2.5.4.x86_64.rpm                                                                                                                 | 1.1 MB  00:00:00     
+(3/16): libsodium-1.0.18-2.amzn2.x86_64.rpm                                                                                                                        | 156 kB  00:00:00     
+warning: /var/cache/yum/x86_64/2/remi-safe/packages/oniguruma5php-6.9.7.1-1.el7.remi.x86_64.rpm: Header V4 DSA/SHA1 Signature, key ID 00f97f56: NOKEY   ]  0.0 B/s | 1.5 MB  --:--:-- ETA 
+Public key for oniguruma5php-6.9.7.1-1.el7.remi.x86_64.rpm is not installed
+(4/16): oniguruma5php-6.9.7.1-1.el7.remi.x86_64.rpm                                                                                                                | 205 kB  00:00:00     
+Public key for php-8.0.15-1.el7.remi.x86_64.rpm is not installed               13% [=========                                                           ] 557 kB/s | 1.9 MB  00:00:23 ETA 
+(5/16): php-8.0.15-1.el7.remi.x86_64.rpm                                                                                                                           | 1.7 MB  00:00:00     
+(6/16): php-common-8.0.15-1.el7.remi.x86_64.rpm                                                                                                                    | 1.2 MB  00:00:00     
+(7/16): php-devel-8.0.15-1.el7.remi.x86_64.rpm                                                                                                                     | 1.3 MB  00:00:00     
+(8/16): php-cli-8.0.15-1.el7.remi.x86_64.rpm                                                                                                                       | 5.3 MB  00:00:01     
+(9/16): php-fpm-8.0.15-1.el7.remi.x86_64.rpm                                                                                                                       | 1.8 MB  00:00:00     
+(10/16): php-mbstring-8.0.15-1.el7.remi.x86_64.rpm                                                                                                                 | 517 kB  00:00:00     
+(11/16): php-mysqlnd-8.0.15-1.el7.remi.x86_64.rpm                                                                                                                  | 256 kB  00:00:00     
+(12/16): php-pdo-8.0.15-1.el7.remi.x86_64.rpm                                                                                                                      | 149 kB  00:00:00     
+(13/16): php-process-8.0.15-1.el7.remi.x86_64.rpm                                                                                                                  |  99 kB  00:00:00     
+(14/16): xz-devel-5.2.2-1.amzn2.0.2.x86_64.rpm                                                                                                                     |  46 kB  00:00:00     
+(15/16): php-sodium-8.0.15-1.el7.remi.x86_64.rpm                                                                                                                   |  90 kB  00:00:00     
+(16/16): php-xml-8.0.15-1.el7.remi.x86_64.rpm                                                                                                                      | 230 kB  00:00:00     
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                                                     8.7 MB/s |  14 MB  00:00:01     
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-remi
+Importing GPG key 0x00F97F56:
+ Userid     : "Remi Collet <RPMS@FamilleCollet.com>"
+ Fingerprint: 1ee0 4cce 88a4 ae4a a29a 5df5 004e 6f47 00f9 7f56
+ Package    : remi-release-7.9-2.el7.remi.noarch (installed)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-remi
+Is this ok [y/N]: y
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : php-common-8.0.15-1.el7.remi.x86_64                                                                                                                                   1/25 
+  Updating   : php-pdo-8.0.15-1.el7.remi.x86_64                                                                                                                                      2/25 
+  Installing : xz-devel-5.2.2-1.amzn2.0.2.x86_64                                                                                                                                     3/25 
+  Installing : libxml2-devel-2.9.1-6.amzn2.5.4.x86_64                                                                                                                                4/25 
+  Installing : ncurses-compat-libs-6.0-8.20170212.amzn2.1.3.x86_64                                                                                                                   5/25 
+  Updating   : php-cli-8.0.15-1.el7.remi.x86_64                                                                                                                                      6/25 
+  Installing : oniguruma5php-6.9.7.1-1.el7.remi.x86_64                                                                                                                               7/25 
+  Installing : libsodium-1.0.18-2.amzn2.x86_64                                                                                                                                       8/25 
+  Installing : php-sodium-8.0.15-1.el7.remi.x86_64                                                                                                                                   9/25 
+  Installing : php-8.0.15-1.el7.remi.x86_64                                                                                                                                         10/25 
+  Installing : php-mbstring-8.0.15-1.el7.remi.x86_64                                                                                                                                11/25 
+  Updating   : php-devel-8.0.15-1.el7.remi.x86_64                                                                                                                                   12/25 
+  Updating   : php-mysqlnd-8.0.15-1.el7.remi.x86_64                                                                                                                                 13/25 
+  Updating   : php-fpm-8.0.15-1.el7.remi.x86_64                                                                                                                                     14/25 
+  Updating   : php-xml-8.0.15-1.el7.remi.x86_64                                                                                                                                     15/25 
+  Updating   : php-process-8.0.15-1.el7.remi.x86_64                                                                                                                                 16/25 
+  Cleanup    : php-devel-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                  17/25 
+  Cleanup    : php-cli-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                    18/25 
+  Cleanup    : php-process-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                19/25 
+  Cleanup    : php-mysqlnd-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                20/25 
+  Cleanup    : php-pdo-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                    21/25 
+  Cleanup    : php-xml-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                    22/25 
+  Cleanup    : php-fpm-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                    23/25 
+  Erasing    : php-json-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                   24/25 
+  Cleanup    : php-common-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                 25/25 
+  Verifying  : php-mbstring-8.0.15-1.el7.remi.x86_64                                                                                                                                 1/25 
+  Verifying  : libxml2-devel-2.9.1-6.amzn2.5.4.x86_64                                                                                                                                2/25 
+  Verifying  : php-cli-8.0.15-1.el7.remi.x86_64                                                                                                                                      3/25 
+  Verifying  : php-fpm-8.0.15-1.el7.remi.x86_64                                                                                                                                      4/25 
+  Verifying  : php-common-8.0.15-1.el7.remi.x86_64                                                                                                                                   5/25 
+  Verifying  : php-xml-8.0.15-1.el7.remi.x86_64                                                                                                                                      6/25 
+  Verifying  : php-devel-8.0.15-1.el7.remi.x86_64                                                                                                                                    7/25 
+  Verifying  : libsodium-1.0.18-2.amzn2.x86_64                                                                                                                                       8/25 
+  Verifying  : oniguruma5php-6.9.7.1-1.el7.remi.x86_64                                                                                                                               9/25 
+  Verifying  : php-8.0.15-1.el7.remi.x86_64                                                                                                                                         10/25 
+  Verifying  : php-sodium-8.0.15-1.el7.remi.x86_64                                                                                                                                  11/25 
+  Verifying  : php-mysqlnd-8.0.15-1.el7.remi.x86_64                                                                                                                                 12/25 
+  Verifying  : php-process-8.0.15-1.el7.remi.x86_64                                                                                                                                 13/25 
+  Verifying  : ncurses-compat-libs-6.0-8.20170212.amzn2.1.3.x86_64                                                                                                                  14/25 
+  Verifying  : xz-devel-5.2.2-1.amzn2.0.2.x86_64                                                                                                                                    15/25 
+  Verifying  : php-pdo-8.0.15-1.el7.remi.x86_64                                                                                                                                     16/25 
+  Verifying  : php-fpm-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                    17/25 
+  Verifying  : php-pdo-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                    18/25 
+  Verifying  : php-devel-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                  19/25 
+  Verifying  : php-process-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                20/25 
+  Verifying  : php-json-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                   21/25 
+  Verifying  : php-common-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                 22/25 
+  Verifying  : php-cli-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                    23/25 
+  Verifying  : php-xml-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                    24/25 
+  Verifying  : php-mysqlnd-7.2.24-1.amzn2.0.1.x86_64                                                                                                                                25/25 
+
+Installed:
+  php.x86_64 0:8.0.15-1.el7.remi                          php-common.x86_64 0:8.0.15-1.el7.remi                          php-mbstring.x86_64 0:8.0.15-1.el7.remi                         
+
+Dependency Installed:
+  libsodium.x86_64 0:1.0.18-2.amzn2       libxml2-devel.x86_64 0:2.9.1-6.amzn2.5.4   ncurses-compat-libs.x86_64 0:6.0-8.20170212.amzn2.1.3   oniguruma5php.x86_64 0:6.9.7.1-1.el7.remi  
+  php-sodium.x86_64 0:8.0.15-1.el7.remi   xz-devel.x86_64 0:5.2.2-1.amzn2.0.2       
+
+Updated:
+  php-mysqlnd.x86_64 0:8.0.15-1.el7.remi                                                        php-pdo.x86_64 0:8.0.15-1.el7.remi                                                       
+
+Dependency Updated:
+  php-cli.x86_64 0:8.0.15-1.el7.remi php-devel.x86_64 0:8.0.15-1.el7.remi php-fpm.x86_64 0:8.0.15-1.el7.remi php-process.x86_64 0:8.0.15-1.el7.remi php-xml.x86_64 0:8.0.15-1.el7.remi
+
+Replaced:
+  php-json.x86_64 0:7.2.24-1.amzn2.0.1                                                                                                                                                    
+
+Complete!
+ryo02:~/environment $ php -v
+Failed loading /usr/lib64/php/modules/xdebug.so:  /usr/lib64/php/modules/xdebug.so: undefined symbol: gc_globals
+PHP 8.0.15 (cli) (built: Jan 18 2022 12:16:19) ( NTS gcc x86_64 )
+Copyright (c) The PHP Group
+Zend Engine v4.0.15, Copyright (c) Zend Technologies
+ryo02:~/environment $ 
