@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+@extends('layouts.app')
+@section('content')
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -15,10 +17,12 @@
            <input type='submit' style="display:none">
            <p class='delete'>[<span onclick="return deletePost(this);">delete</span>]</p>
         </form>
+        
             <div class="post">
                 <h2 class='title'>{{ $post->title }}</h2>
                 <p class='body'>{{ $post->body }}</p>
                 <p class='updated_at'>{{ $post->updated_at }}</p>
+                <a href="/categories/{{ $post->category->id }}">{{ $post->category->name }}</a>
             </div>
             <div class='back'>[ <a href="/">back</a>]</div>
         <script>
@@ -31,3 +35,4 @@
         </script>
     </body>
 </html>
+@endsection

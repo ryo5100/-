@@ -12,15 +12,17 @@ class Post extends Model
     protected $fillable =[
     'title',
     'body',
+    'category_id'
     ];
     
     public function getPaginateBylimit(int $limit_count = 10)
     {
-         return $this ->orderBy("updated_at", 'DESC')->paginate($limit_count);
+         return $this::with('category') ->orderBy("updated_at", 'DESC')->paginate($limit_count);
     }
-    public function show(Post $post)
+    public function category()
     {
-        return view('show')->with(['post => $post']);
+        return $this->belongsTo('App\Category');
     }
-
+    
+    
 }

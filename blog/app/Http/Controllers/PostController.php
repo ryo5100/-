@@ -17,9 +17,9 @@ class PostController extends Controller
  {
    return view('show')->with(["post" => $post]);
  }
- public function create()
+ public function create(Category $category)
  {
-   return view('create');
+   return view('create')->with([ "categories" => $category->get()]);;
  }
  public function store(Post $post , PostRequest $request )
  {
@@ -29,7 +29,7 @@ class PostController extends Controller
  }
  public function edit(Post $post)
  {
-   return view('edit')->with(['post' => $post]);
+  return view('edit')->with(['post' => $post]);
  }
  public function update(Request $request,Post $post)
  {
@@ -42,4 +42,5 @@ class PostController extends Controller
   $post->delete();
   return redirect('/');
  }
+ 
 }
