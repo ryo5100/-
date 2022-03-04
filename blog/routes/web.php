@@ -27,6 +27,6 @@ Route::group(['middleware' => ['auth']],function(){
   Auth::routes();
 
   Route::get('/home', 'HomeController@index')->name('home');
-
+  config("services.teratail.token");
 });
  Auth::routes();
